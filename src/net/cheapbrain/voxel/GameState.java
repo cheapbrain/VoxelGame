@@ -54,8 +54,8 @@ public class GameState {
 		int seed = (int) (Math.random()*100000);
 		System.out.println("seed: "+seed);
 		world = new World("sdfa", seed);
-		for (int x=-10;x<11;x++)
-			for (int z=-10;z<11;z++) {
+		for (int x=-2;x<3;x++)
+			for (int z=-2;z<3;z++) {
 				world.loadChunk(x, z);
 			}
 
