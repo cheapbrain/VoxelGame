@@ -19,7 +19,11 @@ public class MapGenerator {
 					height = (int)(hvalue*32+128);
 				for (int cy=0;cy<wheight;cy++)
 					for (int y=0;y<16;y++)
-						if (y+cy*Chunk.SIZE<=height)
+						if (y+cy*Chunk.SIZE==height)
+							blocks[cy][x][y][z][0] = 3;
+						else if (y+cy*Chunk.SIZE<height-2)
+							blocks[cy][x][y][z][0] = 1;
+						else if (y+cy*Chunk.SIZE<height)
 							blocks[cy][x][y][z][0] = 2;
 			}
 		Chunk[] chunks = new Chunk[wheight];
