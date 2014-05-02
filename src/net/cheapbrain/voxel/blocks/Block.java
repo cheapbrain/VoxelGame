@@ -179,19 +179,18 @@ public class Block {
 	
 	public void mined(float power){
 		if(canBeMined()){
-			resistance = resistance - (power/100);
+			//decrease durability
 		}
-		
-		if(resistance<=0) destroy();
+		//if durability too low destroy it
 	}
 	
 	public void isExploded(float power){
 		if(canBeExploded()){
-			destroy();
+			//destroy it
 		}
 	}
 	
-	public void setUnminable(){
+	protected void setUnminable(){
 		setResistance(1000f);
 	}
 	
@@ -199,7 +198,7 @@ public class Block {
 		return (resistance>=1000);
 	}
 	
-	public void setUnexplodable(){
+	protected void setUnexplodable(){
 		setHardness(1000f);
 	}
 	
@@ -207,7 +206,7 @@ public class Block {
 		return (hardness>=1000);
 	}
 	
-	public void setUntraversable(){
+	protected void setUntraversable(){
 		setDensity(1000f);
 	}
 	
@@ -215,7 +214,7 @@ public class Block {
 		return (density>=1000);
 	}
 	
-	public void setUnslidable(){
+	protected void setUnslidable(){
 		setRoughness(1000f);
 	}
 	
@@ -223,18 +222,11 @@ public class Block {
 		return (roughness>=1000);
 	}
 	
-	public void destroy(){ //set to Air
-		id=0;
-		density=0;
-		elasticity=0;
-		hardness=0;
-	}
-	
 	public float getResistance() {
 		return resistance;
 	}
 
-	public void setResistance(float resistance) {
+	protected void setResistance(float resistance) {
 		this.resistance = resistance;
 	}
 
@@ -242,7 +234,7 @@ public class Block {
 		return hardness;
 	}
 
-	public void setHardness(float hardness) {
+	protected void setHardness(float hardness) {
 		this.hardness = hardness;
 	}
 
@@ -250,7 +242,7 @@ public class Block {
 		return elasticity;
 	}
 
-	public void setElasticity(float elasticity) {
+	protected void setElasticity(float elasticity) {
 		this.elasticity = elasticity;
 	}
 
@@ -258,7 +250,7 @@ public class Block {
 		return density;
 	}
 
-	public void setDensity(float density) {
+	protected void setDensity(float density) {
 		this.density = density;
 	}
 
@@ -266,7 +258,7 @@ public class Block {
 		return roughness;
 	}
 
-	public void setRoughness(float roughness) {
+	protected void setRoughness(float roughness) {
 		this.roughness = roughness;
 	}
 }
