@@ -4,7 +4,6 @@ import static org.lwjgl.opengl.GL11.*;
 
 import org.lwjgl.util.vector.Vector2f;
 import org.newdawn.slick.opengl.Texture;
-
 import net.cheapbrain.voxel.World;
 
 public class Block {
@@ -15,6 +14,11 @@ public class Block {
 	public static int blocksPerRow;
 	public static Texture texture = null;
 	private boolean isOpaque;
+	private float resistance; //resistance to mining
+	private float hardness; //resistance to explosions
+	private float roughness; //resistance to slide
+	private float elasticity; //elasticity to collision
+	private float density; //resistance to being passed trough
 	private short id;
 	
 	public Block(int id, boolean isOpaque) {
@@ -151,5 +155,118 @@ public class Block {
 				}
 				
 		}
+	}
+	
+	public boolean isAir(){ 
+		return(id==0);
+	}
+	
+	public boolean canBeMined(){
+		return(!isUnminable());
+	}
+	
+	public boolean canBeExploded(){
+		return(!isUnexplodable());
+	}
+	
+	public boolean canBeTraversed(){
+		return(!isUntraversable());
+	}
+	
+	public boolean canBeSlided(){
+		return(!isUnslidable());
+	}
+	
+	public void mined(float power){
+		if(canBeMined()){
+			resistance = resistance - (power/100);
+		}
+		
+		if(resistance<=0) destroy();
+	}
+	
+	public void isExploded(float power){
+		if(canBeExploded()){
+			destroy();
+		}
+	}
+	
+	public void setUnminable(){
+		setResistance(1000f);
+	}
+	
+	public boolean isUnminable(){
+		return (resistance>=1000);
+	}
+	
+	public void setUnexplodable(){
+		setHardness(1000f);
+	}
+	
+	public boolean isUnexplodable(){
+		return (hardness>=1000);
+	}
+	
+	public void setUntraversable(){
+		setDensity(1000f);
+	}
+	
+	public boolean isUntraversable(){
+		return (density>=1000);
+	}
+	
+	public void setUnslidable(){
+		setRoughness(1000f);
+	}
+	
+	public boolean isUnslidable(){
+		return (roughness>=1000);
+	}
+	
+	public void destroy(){ //set to Air
+		id=0;
+		density=0;
+		elasticity=0;
+		hardness=0;
+	}
+	
+	public float getResistance() {
+		return resistance;
+	}
+
+	public void setResistance(float resistance) {
+		this.resistance = resistance;
+	}
+
+	public float getHardness() {
+		return hardness;
+	}
+
+	public void setHardness(float hardness) {
+		this.hardness = hardness;
+	}
+
+	public float getElasticity() {
+		return elasticity;
+	}
+
+	public void setElasticity(float elasticity) {
+		this.elasticity = elasticity;
+	}
+
+	public float getDensity() {
+		return density;
+	}
+
+	public void setDensity(float density) {
+		this.density = density;
+	}
+
+	public float getRoughness() {
+		return roughness;
+	}
+
+	public void setRoughness(float roughness) {
+		this.roughness = roughness;
 	}
 }

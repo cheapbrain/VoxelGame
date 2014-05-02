@@ -6,6 +6,11 @@ public class BlockDirt extends Block{
 
 	public BlockDirt() {
 		super(2, true);
+		setUntraversable();
+		setElasticity(64);
+		setHardness(32);
+		setResistance(32);
+		setUnslidable();
 	}
 	
 	@Override
