@@ -30,5 +30,11 @@ public class BlockManager {
 		add(new BlockStone());
 		add(new BlockDirt());
 		add(new BlockGrass());
+		add(new BlockIce());
+		add(new BlockSnow());
+		add(new BlockMud());
+		add(new BlockRubber());
+		add(new BlockWood());
+		add(new BlockSand());
 	}
 }
