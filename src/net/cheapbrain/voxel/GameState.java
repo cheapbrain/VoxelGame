@@ -55,8 +55,8 @@ public class GameState {
 		System.out.println("seed: "+seed);
 		world = new World("sdfa", seed);
 
-		for (int x=-7;x<7;x++)
-			for (int z=-7;z<7;z++) {
+		for (int x=-2;x<2;x++)
+			for (int z=-2;z<2;z++) {
 				world.loadChunk(x, z);
 			}
 

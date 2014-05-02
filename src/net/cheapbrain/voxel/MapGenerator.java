@@ -20,10 +20,10 @@ public class MapGenerator {
 					height = (int)(hvalue*32+128);
 				for (int cy=0;cy<wheight;cy++)
 					for (int y=0;y<16;y++) {
-						double hole = SimplexNoise.noise((x+cx*Chunk.SIZE)/100d, (y+cy*Chunk.SIZE)/100d, (z+cz*Chunk.SIZE)/100d, (float)seed);
-						if (hole*hole>=.01) {
+						double hole = SimplexNoise.noise((x+cx*Chunk.SIZE)/20d, (y+cy*Chunk.SIZE)/50d, (z+cz*Chunk.SIZE)/20d, (float)seed);
+						if (hole>=-.3) {
 							if (y+cy*Chunk.SIZE==height)
-								blocks[cy][x][y][z][0] = 3;
+								blocks[cy][x][y][z][0] = (short) (Math.random()*6+4);
 							else if (y+cy*Chunk.SIZE<height-2)
 								blocks[cy][x][y][z][0] = 1;
 							else if (y+cy*Chunk.SIZE<height)
