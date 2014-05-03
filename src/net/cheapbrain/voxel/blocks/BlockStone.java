@@ -6,11 +6,9 @@ public class BlockStone extends Block{
 
 	public BlockStone() {
 		super(1, true);
-		setUntraversable();
-		setElasticity(255);
-		setHardness(128);
-		setResistance(192);
-		setRoughness(512);
+		setElasticity(1024);
+		setResistance(1028);
+		setRoughness(128);
 	}
 	
 	@Override

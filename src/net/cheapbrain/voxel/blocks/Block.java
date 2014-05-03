@@ -15,10 +15,8 @@ public class Block {
 	public static Texture texture = null;
 	private boolean isOpaque;
 	private float resistance; //resistance to mining
-	private float hardness; //resistance to explosions
 	private float roughness; //resistance to slide
-	private float elasticity; //elasticity to collision
-	private float density; //resistance to being passed trough
+	private float elasticity; //elasticity to collision, explosions
 	private short id;
 	
 	public Block(int id, boolean isOpaque) {
@@ -169,104 +167,66 @@ public class Block {
 		return(!isUnexplodable());
 	}
 	
-	public boolean canBeTraversed(){
-		return(!isUntraversable());
-	}
-	
 	public boolean canBeSlided(){
 		return(!isUnslidable());
 	}
 	
 	public void mined(float power){
 		if(canBeMined()){
-			resistance = resistance - (power/100);
+			//decrease proprety of the single block 
 		}
 		
-		if(resistance<=0) destroy();
+	//if property too low, destroy it
 	}
 	
 	public void isExploded(float power){
 		if(canBeExploded()){
-			destroy();
+			//destroy it
 		}
 	}
 	
-	public void setUnminable(){
-		setResistance(1000f);
+	protected void setUnminable(){
+		setResistance(1024f);
 	}
 	
 	public boolean isUnminable(){
-		return (resistance>=1000);
-	}
-	
-	public void setUnexplodable(){
-		setHardness(1000f);
+		return (resistance>=1024);
 	}
 	
 	public boolean isUnexplodable(){
-		return (hardness>=1000);
+		return ((elasticity<=8)||(resistance>=1024));
 	}
 	
-	public void setUntraversable(){
-		setDensity(1000f);
-	}
-	
-	public boolean isUntraversable(){
-		return (density>=1000);
-	}
-	
-	public void setUnslidable(){
-		setRoughness(1000f);
+	protected void setUnslidable(){
+		setRoughness(1024f);
 	}
 	
 	public boolean isUnslidable(){
-		return (roughness>=1000);
-	}
-	
-	public void destroy(){ //set to Air
-		id=0;
-		density=0;
-		elasticity=0;
-		hardness=0;
+		return (roughness>=1024);
 	}
 	
 	public float getResistance() {
 		return resistance;
 	}
 
-	public void setResistance(float resistance) {
+	protected void setResistance(float resistance) {
 		this.resistance = resistance;
-	}
-
-	public float getHardness() {
-		return hardness;
-	}
-
-	public void setHardness(float hardness) {
-		this.hardness = hardness;
 	}
 
 	public float getElasticity() {
 		return elasticity;
 	}
 
-	public void setElasticity(float elasticity) {
+	protected void setElasticity(float elasticity) {
 		this.elasticity = elasticity;
 	}
 
-	public float getDensity() {
-		return density;
-	}
-
-	public void setDensity(float density) {
-		this.density = density;
-	}
 
 	public float getRoughness() {
 		return roughness;
 	}
 
-	public void setRoughness(float roughness) {
+	protected void setRoughness(float roughness) {
 		this.roughness = roughness;
 	}
 }
