@@ -6,7 +6,7 @@ public class BlockIce extends Block{
 
 	public BlockIce(){
 		super(9, true); //passing id to super constructor
-		setElasticity(512);
+		setElasticity(2);
 		setResistance(128);
 		setRoughness(4);
 	}

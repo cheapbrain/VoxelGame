@@ -6,7 +6,7 @@ public class BlockDirt extends Block{
 
 	public BlockDirt() {
 		super(2, true);
-		setElasticity(64);
+		setElasticity(16);
 		setResistance(32);
 		setRoughness(256);
 	}

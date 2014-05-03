@@ -6,7 +6,7 @@ public class BlockWood extends Block{
 
 	public BlockWood(){
 		super(7, true); //passing id to super constructor
-		setElasticity(256);
+		setElasticity(4);
 		setResistance(64);
 		setRoughness(128);
 	}

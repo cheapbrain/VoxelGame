@@ -6,7 +6,7 @@ public class BlockSnow extends Block{
 
 	public BlockSnow(){
 		super(8, true); //passing id to super constructor
-		setElasticity(8);
+		setElasticity(1);
 		setResistance(32);
 		setRoughness(32);
 	}

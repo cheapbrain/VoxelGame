@@ -6,7 +6,7 @@ public class BlockStone extends Block{
 
 	public BlockStone() {
 		super(1, true);
-		setElasticity(1024);
+		setElasticity(1);
 		setResistance(1028);
 		setRoughness(128);
 	}

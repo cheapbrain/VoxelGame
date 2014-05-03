@@ -6,7 +6,7 @@ public class BlockGrass extends Block{
 
 	public BlockGrass() {
 		super(3, true);
-		setElasticity(64);
+		setElasticity(16);
 		setResistance(32);
 		setRoughness(128);
 	}

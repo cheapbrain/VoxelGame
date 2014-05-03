@@ -6,7 +6,7 @@ public class BlockSand extends Block{
 
 	public BlockSand(){
 		super(4, true); //passing id to super constructor
-		setElasticity(16);
+		setElasticity(64);
 		setResistance(16);
 		setRoughness(256);
 	}
