@@ -76,12 +76,13 @@ public class Main {
 				double k = .5;
 				int p = 1;
 				
-				double v1 = fractalNoise(x/s/2d, y/s, seed, p, k, FUNCTION_SUM_P_ABS);
-				double v2 = fractalNoise(x/s/2d, y/s, seed*31, p, k, FUNCTION_SUM_P_ABS);
-				v2 = 0;
+				double v1 = Math.sqrt(fractalNoise(x/s/2d, y/s, seed, p, k, FUNCTION_SUM_P_ABS));
+				double v2 = Math.sqrt(fractalNoise(x/s/2d, y/s, seed*31, p, k, FUNCTION_SUM_P_ABS));
+
 				if (y>h/2d) {
 					if (y<h/2d+10) {
 						v1 *= (y-h/2d)*Math.PI/2;
+						v2 *= (y-h/2d)*Math.PI/2;
 					}
 					else {
 						v1 = 1;
@@ -89,7 +90,7 @@ public class Main {
 					}
 				}
 				
-				if (v1<.1&&v2<.1)
+				if (v1<.3&&v2<.3)
 					value = 255;
 				
 				value = value%256;
