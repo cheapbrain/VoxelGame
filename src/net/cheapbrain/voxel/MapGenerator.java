@@ -22,10 +22,10 @@ public class MapGenerator {
 				
 				for (int cy=0;cy<wheight;cy++)
 					for (int y=0;y<16;y++) {
-						double density = fractalNoise( (x+cx*Chunk.SIZE)/100., (y+cy*Chunk.SIZE)/100., (z+cz*Chunk.SIZE)/100., seed, 4, .4, FUNCTION_SUM_P);
+						double density = fractalNoise( (x+cx*Chunk.SIZE)/100., (y+cy*Chunk.SIZE)/150., (z+cz*Chunk.SIZE)/100., seed, 4, .3, FUNCTION_SUM_P);
 						//double hole1 = fractalNoise( (x+cx*Chunk.SIZE)/50., (y+cy*Chunk.SIZE)/50., (z+cz*Chunk.SIZE)/50., seed, 1, .5, FUNCTION_SUM_P_ABS)/Math.sqrt(32/(y+cy*Chunk.SIZE+1d));
 						//double hole2 = fractalNoise( (z+cz*Chunk.SIZE)/50., (y+cy*Chunk.SIZE)/50., (x+cx*Chunk.SIZE)/50., seed*23, 1, .5, FUNCTION_SUM_P_ABS)/Math.sqrt(32/(y+cy*Chunk.SIZE+1d));
-						if (density+Math.pow((128-y-cy*Chunk.SIZE)/32d, 1)>0) {
+						if (density+(128-y-cy*Chunk.SIZE)/64d>0) {
 							if (y+cy*Chunk.SIZE>128)
 								blocks[cy][x][y][z][0] = 2;
 							else
