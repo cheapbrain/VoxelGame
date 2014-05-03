@@ -41,13 +41,11 @@ public class World {
 	}
 	
 	public void loadChunk(int x, int z) {
-		long initTime = System.currentTimeMillis();
 		Chunk[] tchunks = MapGenerator.generateChunk(seed, x, z, WORLDH);
 		for (int y=0;y<WORLDH;y++) {
 
 			chunks.put(new Vector3i(x, y, z), tchunks[y]);
 		}
-		System.out.println("done in: "+(System.currentTimeMillis()-initTime));
 	}
 		
 	public void removeChunk(int x, int y, int z) {

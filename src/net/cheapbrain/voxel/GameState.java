@@ -50,19 +50,19 @@ public class GameState {
 		
 		
 		System.out.println("generating...");
-		
-		int seed = (int) (Math.random()*100000);
+		long time = System.currentTimeMillis();
+		int seed = 666;
 		System.out.println("seed: "+seed);
 		world = new World("sdfa", seed);
 
-		for (int x=-2;x<2;x++)
-			for (int z=-2;z<2;z++) {
+		for (int x=-2;x<3;x++)
+			for (int z=-2;z<3;z++) {
 				world.loadChunk(x, z);
 			}
-
-		System.out.println("done.");
+		System.out.println("done in: "+(System.currentTimeMillis()-time));
+		time = System.currentTimeMillis();
 		world.render();
-		System.out.println("done.");
+		System.out.println("done in: "+(System.currentTimeMillis()-time));
 		camera = new Camera(0, 150, 0);
 		
 		loop();
