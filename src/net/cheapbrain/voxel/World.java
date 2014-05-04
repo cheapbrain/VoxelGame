@@ -44,7 +44,7 @@ public class World {
 		Chunk[] tchunks = MapGenerator.generateChunk(seed, x, z, WORLDH);
 		for (int y=0;y<WORLDH;y++) {
 
-			chunks.put(new Vector3i(x, y, z), tchunks[y]);
+			chunks.put(new Vector3i(x, y, z), tchunks[y]); //i chunk generati vengono messi nell'hashmap
 		}
 	}
 		

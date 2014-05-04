@@ -2,9 +2,11 @@ package net.cheapbrain.voxel.entities;
 
 public class Mob extends Entity {
 	private String name,customName;
-	private float health;
-	private boolean canPickUp,canDespawn,immortal;
+	private float health,air;
+	private boolean canPickUp,canDespawn;
+	@SuppressWarnings("unused")
 	private int[] equipment,equipChances; //0:(Hand)  1:(Feet) 2:(Legs) 3:(Chest) 4:(Head)
+	@SuppressWarnings("unused")
 	private int[] drops,dropChances;
 	
 	
@@ -32,8 +34,18 @@ public class Mob extends Entity {
 		
 	}
 	
+	public void setImmortal(){
+		health=1000000;
+	}
 	public boolean isImmortal(){
 		return (health>=1000000);
+	}
+	
+	public void setUndrawnable(){
+		air=1024;
+	}
+	public boolean isUndrawnable(){
+		return (air>=1024);
 	}
 	
 	public void setName(){

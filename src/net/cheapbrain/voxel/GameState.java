@@ -1,11 +1,16 @@
 package net.cheapbrain.voxel;
 
 import static org.lwjgl.opengl.GL11.*;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import net.cheapbrain.voxel.blocks.BlockManager;
 import net.cheapbrain.voxel.rendering.Camera;
 import net.cheapbrain.voxel.rendering.Screen;
 import net.cheapbrain.voxel.utils.Input;
 import net.cheapbrain.voxel.utils.Timer;
+import net.cheapbrain.voxel.utils.Vector3i;
 
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
@@ -14,12 +19,14 @@ import org.lwjgl.util.vector.Vector4f;
 
 public class GameState {
 	private World world;
+	private Map<Vector3i, Integer> heatmap = new HashMap<Vector3i, Integer>();
 	private Camera camera;
 	private Input input;
 	private Screen screen;
 	
 	private Vector4f bg = new Vector4f(0.0f, 0.4f, 0.7f, 0.0f);
 	private float fovy = 60.0f;
+	private static final int WORLDW = 12;
 		
 	private void initOpenGL() {
 		glShadeModel(GL_FLAT);
@@ -55,9 +62,10 @@ public class GameState {
 		System.out.println("seed: "+seed);
 		world = new World("sdfa", seed);
 
-		for (int x=-4;x<5;x++)
-			for (int z=-4;z<5;z++) {
+		for (int x=-WORLDW/2;x<WORLDW/2;x++)
+			for (int z=-WORLDW/2;z<WORLDW/2;z++) {
 				world.loadChunk(x, z);
+
 			}
 		System.out.println("done in: "+(System.currentTimeMillis()-time));
 		time = System.currentTimeMillis();
