@@ -1,23 +1,16 @@
 package net.cheapbrain.voxel.blocks;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import net.cheapbrain.voxel.rendering.Textures;
 
 public class BlockManager {
-	private static Map<Short, Block> blocks = new HashMap<Short, Block>();
+	private static Block[] blocks = new Block[100];
 	
 	public static Block get(int id) {
-		return blocks.get((short)id);
+		return blocks[id];
 	}
 	
 	public static void add(Block block) {
-		blocks.put(block.getId(), block);
-	}
-	
-	public static void remove(int id) {
-		blocks.remove(id);
+		blocks[block.getId()] = block;
 	}
 	
 	public static void init() {

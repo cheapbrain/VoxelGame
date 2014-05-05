@@ -9,7 +9,7 @@ public class MapGenerator {
 		seed *= 31;
 		for (int x=0;x<16;x++)
 			for (int z=0;z<16;z++) {
-				/*
+				
 				double hvalue = fractalNoise( (x+cx*Chunk.SIZE)/300., (z+cz*Chunk.SIZE)/300., seed, 8, .5, FUNCTION_SUM_P);
 				
 				if (hvalue>0)
@@ -18,28 +18,20 @@ public class MapGenerator {
 					hvalue *= .5;
 				
 				int height = (int)(hvalue*64+128);
-				*/
+				
 				
 				for (int cy=0;cy<wheight;cy++)
 					for (int y=0;y<16;y++) {
-						double density = fractalNoise( (x+cx*Chunk.SIZE)/100., (y+cy*Chunk.SIZE)/150., (z+cz*Chunk.SIZE)/100., seed, 4, .3, FUNCTION_SUM_P);
-						//double hole1 = fractalNoise( (x+cx*Chunk.SIZE)/50., (y+cy*Chunk.SIZE)/50., (z+cz*Chunk.SIZE)/50., seed, 1, .5, FUNCTION_SUM_P_ABS)/Math.sqrt(32/(y+cy*Chunk.SIZE+1d));
-						//double hole2 = fractalNoise( (z+cz*Chunk.SIZE)/50., (y+cy*Chunk.SIZE)/50., (x+cx*Chunk.SIZE)/50., seed*23, 1, .5, FUNCTION_SUM_P_ABS)/Math.sqrt(32/(y+cy*Chunk.SIZE+1d));
-						if (density+(128-y-cy*Chunk.SIZE)/64d>0) {
-							if (y+cy*Chunk.SIZE>128)
-								blocks[cy][x][y][z][0] = 2;
+						
+						if (y+cy*Chunk.SIZE==height)
+							if (y+cy*Chunk.SIZE<128)
+								blocks[cy][x][y][z][0] = 4;
 							else
-								blocks[cy][x][y][z][0] = 1;
-							/*if (y+cy*Chunk.SIZE==height)
-								if (y+cy*Chunk.SIZE<128)
-									blocks[cy][x][y][z][0] = 4;
-								else
-									blocks[cy][x][y][z][0] = 3;
-							else if (y+cy*Chunk.SIZE<height-2)
-								blocks[cy][x][y][z][0] = 1;
-							else if (y+cy*Chunk.SIZE<height)
-								blocks[cy][x][y][z][0] = 2;*/
-						}
+								blocks[cy][x][y][z][0] = 3;
+						else if (y+cy*Chunk.SIZE<height-2)
+							blocks[cy][x][y][z][0] = 1;
+						else if (y+cy*Chunk.SIZE<height)
+							blocks[cy][x][y][z][0] = 2;
 					}
 			}
 		Chunk[] chunks = new Chunk[wheight];

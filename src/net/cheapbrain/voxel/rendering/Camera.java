@@ -43,21 +43,21 @@ public class Camera {
 		if (input.isKeyPressed("fall"))  pos.y -= moveSpeed;
 		
 		if (input.isKeyPressed("up"))    {
-			pos.z -= moveSpeed*cos;
+			pos.z += moveSpeed*cos;
 			pos.x += moveSpeed*sin;
 		}
 		if (input.isKeyPressed("down"))  {
-			pos.z += moveSpeed*cos;
+			pos.z -= moveSpeed*cos;
 			pos.x -= moveSpeed*sin;
 		}
 		
 		if (input.isKeyPressed("left"))  {
 			pos.x -= moveSpeed*cos;
-			pos.z -= moveSpeed*sin;
+			pos.z += moveSpeed*sin;
 		}
 		if (input.isKeyPressed("right")) {
 			pos.x += moveSpeed*cos;
-			pos.z += moveSpeed*sin;
+			pos.z -= moveSpeed*sin;
 		}
 		
 	}

@@ -6,7 +6,7 @@ import net.cheapbrain.voxel.blocks.BlockManager;
 
 public class Chunk {
 	public static final short SIZE = 16;
-	private short[][][][] blocks;
+	public short[][][][] blocks;
 	private int displayList;
 	private int x, y, z;
 	private boolean hasChanged = true;
@@ -28,7 +28,7 @@ public class Chunk {
 		hasChanged = true;
 	}
 	
-	public void loadChunk(World world) {
+	public void load(World world) {
 		if (displayList!=0)
 			glDeleteLists(displayList, 1);
 		displayList = glGenLists(1);
@@ -47,9 +47,15 @@ public class Chunk {
 		hasChanged = false;
 	}
 	
+	public void destroy() {
+		glDeleteLists(displayList, 1);
+	}
+	
 	public void render(World world) {
-		if (hasChanged)
-			loadChunk(world);
+		if (hasChanged) {
+			load(world);
+			
+		}
 		glCallList(displayList);
 	}
 	
