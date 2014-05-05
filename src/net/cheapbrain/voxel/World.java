@@ -76,7 +76,7 @@ public class World {
 		int d = a2-a1;
 		if (Math.abs(d)>arrayW/2) {
 			return d-arrayW*Utils.sign(d);
-		} else
+		} else 
 			return d;
 	}
 	
@@ -116,7 +116,6 @@ public class World {
 										if(chunks[asx][asz][asy]!=null)
 											chunks[asx][asz][asy].setAsChanged();
 								}
-						
 					}
 				}
 				

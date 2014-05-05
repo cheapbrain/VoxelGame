@@ -1,7 +1,5 @@
 package net.cheapbrain.voxel.blocks;
 
-import net.cheapbrain.voxel.World;
-
 public class BlockDirt extends Block{
 
 	public BlockDirt() {
@@ -12,7 +10,7 @@ public class BlockDirt extends Block{
 	}
 	
 	@Override
-	public void render(int x, int y, int z, int data, World world) {
-		render(x, y, z, new int[]{1}, neighbours(x, y, z, world));
+	public void render(int x, int y, int z, int data, boolean[] neighbours) {
+		render(x, y, z, new int[]{1}, neighbours);
 	}
 }

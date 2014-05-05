@@ -4,7 +4,6 @@ import static org.lwjgl.opengl.GL11.*;
 
 import org.lwjgl.util.vector.Vector2f;
 import org.newdawn.slick.opengl.Texture;
-import net.cheapbrain.voxel.World;
 
 public class Block {
 	public static final String textureUrl = "res/terrain.png";
@@ -32,26 +31,7 @@ public class Block {
 		return isOpaque;
 	}
 	
-	public final boolean isOpaque(int x, int y, int z, World world) {
-		Block block = world.getBlock(x, y, z);
-		if (block==null) return true;
-		return block.isOpaque();
-	}
-	
-	public boolean[] neighbours(int x, int y, int z, World world) {
-		boolean[] neighbours = new boolean[6];
-		
-		neighbours[0] = isOpaque(x, y, z+1, world);
-		neighbours[1] = isOpaque(x, y+1, z, world);
-		neighbours[2] = isOpaque(x, y-1, z, world);
-		neighbours[3] = isOpaque(x-1, y, z, world);
-		neighbours[4] = isOpaque(x+1, y, z, world);
-		neighbours[5] = isOpaque(x, y, z-1, world);
-		
-		return neighbours;
-	}
-	
-	public void render(int x, int y, int z, int data, World world) {
+	public void render(int x, int y, int z, int data, boolean[] neighbours) {
 		
 	}
 	

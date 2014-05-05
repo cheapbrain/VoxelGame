@@ -18,10 +18,11 @@ public class MapGenerator {
 					hvalue *= .5;
 				
 				int height = (int)(hvalue*64+128);
-				
+				if (height >=wheight*Chunk.SIZE)
+					height = wheight*Chunk.SIZE-1;
 				
 				for (int cy=0;cy<wheight;cy++)
-					for (int y=0;y<16;y++) {
+					for (int y=0;y<Chunk.SIZE;y++) {
 						
 						if (y+cy*Chunk.SIZE==height)
 							if (y+cy*Chunk.SIZE<128)

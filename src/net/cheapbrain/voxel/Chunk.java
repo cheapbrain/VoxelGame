@@ -9,12 +9,16 @@ public class Chunk {
 	public short[][][][] blocks;
 	private int displayList;
 	private int x, y, z;
+	private int rx, ry, rz;
 	private boolean hasChanged = true;
 	
 	public Chunk(int x, int y, int z) {
 		this.x = x;
 		this.y = y;
 		this.z = z;
+		rx = x*SIZE;
+		ry = y*SIZE;
+		rz = z*SIZE;
 		blocks = new short[SIZE][SIZE][SIZE][2];
 	}
 	
@@ -22,6 +26,9 @@ public class Chunk {
 		this.x = x;
 		this.y = y;
 		this.z = z;
+		rx = x*SIZE;
+		ry = y*SIZE;
+		rz = z*SIZE;
 		this.blocks = blocks;
 	}
 	public void setAsChanged() {
@@ -37,8 +44,31 @@ public class Chunk {
 				for (int x=0;x<SIZE;x++) {
 					for (int y=0;y<SIZE;y++) {
 						for (int z=0;z<SIZE;z++) {
-							if (blocks[x][y][z][0]!=0)
-								BlockManager.get(blocks[x][y][z][0]).render(x+this.x*SIZE, y+this.y*SIZE, z+this.z*SIZE, blocks[x][y][z][1], world);
+							if (blocks[x][y][z][0]!=0) {
+								boolean[] neighbours = new boolean[6];
+								Block block;
+								
+								block = z==SIZE-1?world.getBlock(x+rx, y+ry, rz+SIZE):BlockManager.get(blocks[x][y][z+1][0]);
+								neighbours[0] = block==null?true:block.isOpaque();
+								
+								block = y==SIZE-1?world.getBlock(x+rx, ry+SIZE, z+rz):BlockManager.get(blocks[x][y+1][z][0]);
+								neighbours[1] = block==null?false:block.isOpaque();
+								
+								block = y==0?world.getBlock(x+rx, ry-1, z+rz):BlockManager.get(blocks[x][y-1][z][0]);
+								neighbours[2] = block==null?false:block.isOpaque();
+								
+								block = x==0?world.getBlock(rx-1, y+ry, z+rz):BlockManager.get(blocks[x-1][y][z][0]);
+								neighbours[3] = block==null?true:block.isOpaque();
+
+								block = x==SIZE-1?world.getBlock(rx+SIZE, y+ry, z+rz):BlockManager.get(blocks[x+1][y][z][0]);
+								neighbours[4] = block==null?true:block.isOpaque();
+
+								block = z==0?world.getBlock(x+rx, y+ry, rz-1):BlockManager.get(blocks[x][y][z-1][0]);
+								neighbours[5] = block==null?true:block.isOpaque();
+								
+								BlockManager.get(blocks[x][y][z][0]).render(x+rx, y+ry, z+rz, blocks[x][y][z][1], neighbours);
+								
+							}
 						}
 					}
 				}
@@ -49,6 +79,7 @@ public class Chunk {
 	
 	public void destroy() {
 		glDeleteLists(displayList, 1);
+		blocks = null;
 	}
 	
 	public void render(World world) {
