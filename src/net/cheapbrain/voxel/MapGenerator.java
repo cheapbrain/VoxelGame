@@ -4,6 +4,19 @@ import net.cheapbrain.voxel.utils.SimplexNoise;
 
 public class MapGenerator {
 	
+	public static short getSubWaterSurface(){
+		return 8;
+	}
+	public static short getSurface(){
+		return 9;
+	}
+	public static short getFirstLayer(){
+		return 2;
+	}
+	public static short getSecondLayer(){
+		return 1;
+	}
+	
 	public static Chunk[] generateChunk(int seed, int cx, int cz, int wheight) {
 		short[][][][][] blocks = new short[wheight][Chunk.SIZE][Chunk.SIZE][Chunk.SIZE][2];
 		seed *= 31;
@@ -26,13 +39,13 @@ public class MapGenerator {
 						
 						if (y+cy*Chunk.SIZE==height)
 							if (y+cy*Chunk.SIZE<128)
-								blocks[cy][x][y][z][0] = 4;
+								blocks[cy][x][y][z][0] = getSubWaterSurface();
 							else
-								blocks[cy][x][y][z][0] = 3;
+								blocks[cy][x][y][z][0] = getSurface();
 						else if (y+cy*Chunk.SIZE<height-2)
-							blocks[cy][x][y][z][0] = 1;
+							blocks[cy][x][y][z][0] = getSecondLayer();
 						else if (y+cy*Chunk.SIZE<height)
-							blocks[cy][x][y][z][0] = 2;
+							blocks[cy][x][y][z][0] = getFirstLayer();
 					}
 			}
 		Chunk[] chunks = new Chunk[wheight];

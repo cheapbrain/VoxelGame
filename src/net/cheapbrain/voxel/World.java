@@ -12,6 +12,7 @@ public class World {
 	@SuppressWarnings("unused")
 	private String name;
 	private int seed;
+	//private int[][] heat;
 	
 	public World(String name, int seed, int viewDistance) {
 		this.viewDistance = viewDistance;
@@ -19,7 +20,16 @@ public class World {
 		this.seed = seed;
 		calculateArraySize();
 		chunks = new Chunk[arrayW][arrayW][WORLDH];
+		//heat=new int[?][?];
 	}
+	
+	/*public void generateHeatmap(int[][] heat){
+		for(float x=0f; x<(float)(?/10f); x=x+0.1f){
+			for(float y=0f; y<(float)(?/10f); y=y+0.1f){
+				heat[(int) (x*10)][(int) (y*10)]=(int)(60-((x+0.1f)*(y+0.1f))*(???));
+			}
+	}*/
+	
 	
 	public boolean isYValid(int y) {
 		return (y>=0&&y<WORLDH*Chunk.SIZE);

@@ -6,7 +6,7 @@ import org.lwjgl.util.vector.Vector2f;
 import org.newdawn.slick.opengl.Texture;
 
 public class Block {
-	public static final String textureUrl = "res/terrain.png";
+	public static final String textureUrl = "res/terrain2.png";
 	public static final int blockTextRes = 16;
 	public static float blockTexw;
 	public static float blockTexh;
