@@ -1,4 +1,5 @@
 package net.cheapbrain.voxel.utils;
+
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 import java.io.File;
@@ -13,6 +14,7 @@ public class Main {
 	
 
 	public static double fractalNoise(double x, double y, double z, int depth, double p, int f) {
+	//prime due:coord , z: seed, depth: quante volte la applica su se stesso, p:persistenza-numero da moltiplicare a ogni loop, f: seleziona SUM_P o SUM_PABS
 		double noise = 0;
 		double p2 = 1;
 		double s = 1;
