@@ -10,6 +10,7 @@ public class Chunk {
 	private int displayList;
 	private int x, y, z;
 	private int rx, ry, rz;
+	private int biome = 0;
 	private boolean hasChanged = true;
 	
 	public Chunk(int x, int y, int z) {

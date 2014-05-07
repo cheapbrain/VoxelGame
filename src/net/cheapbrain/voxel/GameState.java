@@ -1,7 +1,7 @@
 package net.cheapbrain.voxel;
 
 import static org.lwjgl.opengl.GL11.*;
-
+import net.cheapbrain.voxel.biomes.BiomeManager;
 import net.cheapbrain.voxel.blocks.BlockManager;
 import net.cheapbrain.voxel.rendering.Camera;
 import net.cheapbrain.voxel.rendering.Screen;
@@ -49,6 +49,7 @@ public class GameState {
 		screen = Screen.getInstance();
 		initOpenGL();
 		BlockManager.init();
+		BiomeManager.init();
 		input = new Input();
 		
 		int seed = 666;

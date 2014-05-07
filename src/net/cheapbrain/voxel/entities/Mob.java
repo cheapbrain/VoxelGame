@@ -67,6 +67,7 @@ public class Mob extends Entity {
 		case 105: this.name="Cat"; break;
 		case 106: this.name="Goat"; break;
 		case 107: this.name="Horse"; break;
+		case 108: this.name="Donkey"; break;
 		case 109: this.name="Rabbit"; break;
 		}
 	}

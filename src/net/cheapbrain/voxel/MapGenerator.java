@@ -1,20 +1,12 @@
 package net.cheapbrain.voxel;
 
+import net.cheapbrain.voxel.biomes.BiomeManager;
 import net.cheapbrain.voxel.utils.SimplexNoise;
 
 public class MapGenerator {
 	
-	public static short getSubWaterSurface(){
-		return 8;
-	}
-	public static short getSurface(){
-		return 9;
-	}
-	public static short getFirstLayer(){
-		return 2;
-	}
-	public static short getSecondLayer(){
-		return 1;
+	public static int biome(){
+		return 4;
 	}
 	
 	public static Chunk[] generateChunk(int seed, int cx, int cz, int wheight) {
@@ -36,16 +28,25 @@ public class MapGenerator {
 				
 				for (int cy=0;cy<wheight;cy++)
 					for (int y=0;y<Chunk.SIZE;y++) {
-						
+											
 						if (y+cy*Chunk.SIZE==height)
 							if (y+cy*Chunk.SIZE<128)
-								blocks[cy][x][y][z][0] = getSubWaterSurface();
+								blocks[cy][x][y][z][0] = (short) BiomeManager.get(biome()).getSubWaterSurface();
 							else
-								blocks[cy][x][y][z][0] = getSurface();
-						else if (y+cy*Chunk.SIZE<height-2)
-							blocks[cy][x][y][z][0] = getSecondLayer();
-						else if (y+cy*Chunk.SIZE<height)
-							blocks[cy][x][y][z][0] = getFirstLayer();
+								blocks[cy][x][y][z][0] = (short) BiomeManager.get(biome()).getSurface();
+						
+						else{
+							for(short i=0; i<BiomeManager.get(biome()).getLayerNumber();i++){
+								if (y+cy*Chunk.SIZE<height-BiomeManager.get(biome()).getCumulativeThick(i))
+									blocks[cy][x][y][z][0] = (short) BiomeManager.get(biome()).getLayerId(i);
+							}
+							
+							if (y+cy*Chunk.SIZE<height-BiomeManager.get(biome()).
+									getCumulativeThick(BiomeManager.get(biome()).getLayerNumber())
+									-BiomeManager.get(biome()).getLast()){
+								blocks[cy][x][y][z][0] = (short) BiomeManager.get(biome()).getLast();
+							}
+						}			
 					}
 			}
 		Chunk[] chunks = new Chunk[wheight];

@@ -1,10 +1,12 @@
 package net.cheapbrain.voxel.blocks;
 
-public class BlockMud extends Block {
+public class BlockGravel extends Block {
 
-	public BlockMud() {
+	public BlockGravel() {
 		super(5, true);
-		//?? proprietà da definire per semifluido
+		setElasticity(64);
+		setResistance(16);
+		setRoughness(256);
 	}	
 	
 	@Override
