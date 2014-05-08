@@ -6,7 +6,7 @@ import net.cheapbrain.voxel.utils.SimplexNoise;
 public class MapGenerator {
 	
 	public static int biome(){
-		return 2;
+		return 3;
 	}
 	
 	public static Chunk[] generateChunk(int seed, int cx, int cz, int wheight) {
@@ -36,15 +36,29 @@ public class MapGenerator {
 								blocks[cy][x][y][z][0] = (short) BiomeManager.get(biome()).getSurface();
 						
 						else{
-							for(short i=0; i<BiomeManager.get(biome()).getLayerNumber();i++){
-								if (y+cy*Chunk.SIZE<height-BiomeManager.get(biome()).getCumulativeThick(i))
-									blocks[cy][x][y][z][0] = (short) BiomeManager.get(biome()).getLayerId(i);
+							if (y+cy*Chunk.SIZE<128){
+								for(short i=0; i<BiomeManager.get(biome()).getSubWaterLayerNumber();i++){
+									if (y+cy*Chunk.SIZE<height-BiomeManager.get(biome()).getSubWaterCumulativeThick(i))
+										blocks[cy][x][y][z][0] = (short) BiomeManager.get(biome()).getSubWaterLayerId(i);
+								}
+								
+								if (y+cy*Chunk.SIZE<height-BiomeManager.get(biome()).
+										getCumulativeThick(BiomeManager.get(biome()).getLayerNumber())
+										-BiomeManager.get(biome()).getLast()){
+									blocks[cy][x][y][z][0] = (short) BiomeManager.get(biome()).getLast();
+								}
 							}
-							
-							if (y+cy*Chunk.SIZE<height-BiomeManager.get(biome()).
-									getCumulativeThick(BiomeManager.get(biome()).getLayerNumber())
-									-BiomeManager.get(biome()).getLast()){
-								blocks[cy][x][y][z][0] = (short) BiomeManager.get(biome()).getLast();
+							else{
+								for(short i=0; i<BiomeManager.get(biome()).getLayerNumber();i++){
+									if (y+cy*Chunk.SIZE<height-BiomeManager.get(biome()).getCumulativeThick(i))
+										blocks[cy][x][y][z][0] = (short) BiomeManager.get(biome()).getLayerId(i);
+								}
+								
+								if (y+cy*Chunk.SIZE<height-BiomeManager.get(biome()).
+										getCumulativeThick(BiomeManager.get(biome()).getLayerNumber())
+										-BiomeManager.get(biome()).getLast()){
+									blocks[cy][x][y][z][0] = (short) BiomeManager.get(biome()).getLast();
+								}
 							}
 						}			
 					}

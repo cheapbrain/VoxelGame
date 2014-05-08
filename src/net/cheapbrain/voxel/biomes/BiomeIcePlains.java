@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class BiomeIcePlains extends Biome{
 		
 		public BiomeIcePlains() {
-			super(4, 9, 9, list(), 1);
+			super(4, 9, 1, list(), subWaterList(), 1);
 		}
 		
 		public static ArrayList<int[]> list(){
@@ -13,6 +13,13 @@ public class BiomeIcePlains extends Biome{
 			a.add(new int[]{9,5});
 			a.add(new int[]{2,5});
 			return a;
+		}
+		
+		public static ArrayList<int[]> subWaterList(){
+			ArrayList<int[]> b=new ArrayList<int[]>();
+			b.add(new int[]{1,5});
+			b.add(new int[]{2,10});
+			return b;
 		}
 
 }
