@@ -82,6 +82,8 @@ public class GameState {
 				frames = 0;
 			}
 		}	
+		
+		world.dispose();
 	}
 	
 	public void update() {

@@ -3,9 +3,11 @@ package net.cheapbrain.voxel;
 import net.cheapbrain.voxel.blocks.Block;
 import net.cheapbrain.voxel.rendering.Textures;
 import net.cheapbrain.voxel.utils.Utils;
+import net.cheapbrain.voxel.utils.Vector3i;
 
 public class World {
 	private static final int WORLDH = 16;
+	private ChunkLoader chunkLoader;
 	private int viewDistance;
 	private int arrayW;
 	public Chunk[][][] chunks; // x z y
@@ -20,7 +22,16 @@ public class World {
 		this.seed = seed;
 		calculateArraySize();
 		chunks = new Chunk[arrayW][arrayW][WORLDH];
+		chunkLoader = new ChunkLoader(this);
 		//heat=new int[?][?];
+	}
+	
+	public int getHeight() {
+		return WORLDH;
+	}
+	
+	public int getSeed() {
+		return seed;
 	}
 	
 	/*public void generateHeatmap(int[][] heat){
@@ -67,7 +78,7 @@ public class World {
 	}
 	
 	private void loadChunk(int ax, int az, int cx, int cz) {
-		chunks[ax][az] = MapGenerator.generateChunk(seed, cx, cz, WORLDH);
+		chunkLoader.in.add(new Vector3i(cx, 0, cz));
 	}
 		
 	private void removeChunk(int ax, int az) {
@@ -99,10 +110,29 @@ public class World {
 	}
 	
 	public void update(int px, int pz) {
+		while(!chunkLoader.out.isEmpty()) {
+			Chunk[] column = chunkLoader.out.poll();
+			int ax2 = getPositionArray(column[0].getX());
+			int az2 = getPositionArray(column[0].getZ());
+			if (chunks[ax2][az2][0]==Chunk.VOIDCHUNK) {
+				chunks[ax2][az2] = column;
+				for (int sx=-1;sx<=1;sx++)
+					for (int sz=-1;sz<=1;sz++)
+						if (sx*sz==0) {
+							int asx = getPositionArray(sx+ax2);
+							int asz = getPositionArray(sz+az2);
+							for (int asy=0;asy<WORLDH;asy++)
+								if(chunks[asx][asz][asy]!=null)
+									chunks[asx][asz][asy].setAsChanged();
+						}
+			}
+		}
+		
 		int cx = getChunkPosition(px);
 		int cz = getChunkPosition(pz);
 		int ax = getPositionArray(cx);
 		int az = getPositionArray(cz);
+		
 		for (int x=0;x<arrayW;x++)
 			for (int z=0;z<arrayW;z++) {
 				if (chunks[x][z][0]!=null) {
@@ -111,24 +141,16 @@ public class World {
 					if (dx>viewDistance||dy>viewDistance)
 						removeChunk(x, z);
 				}
-				
 				if (chunks[x][z][0]==null) {
 					int dx = getDistanceArray(ax, x);
 					int dz = getDistanceArray(az, z);
 					if (Math.abs(dx)<=viewDistance&&Math.abs(dz)<=viewDistance) {
+						for (int y=0;y<WORLDH;y++)
+							chunks[x][z][y] = Chunk.VOIDCHUNK;
 						loadChunk(x, z, cx+dx, cz+dz);
-						for (int sx=-1;sx<=1;sx++)
-							for (int sz=-1;sz<=1;sz++)
-								if (sx*sz==0) {
-									int asx = getPositionArray(sx+x);
-									int asz = getPositionArray(sz+z);
-									for (int asy=0;asy<WORLDH;asy++)
-										if(chunks[asx][asz][asy]!=null)
-											chunks[asx][asz][asy].setAsChanged();
-								}
+						
 					}
 				}
-				
 			}
 	}
 
@@ -140,6 +162,17 @@ public class World {
 					Chunk c = chunks[x][z][y];
 					if (c!=null)
 						c.render(this);
+				}
+	}
+
+	public void dispose() {
+		chunkLoader.stop();
+		for (int x=0;x<arrayW;x++)
+			for (int z=0;z<arrayW;z++)
+				for (int y=0;y<WORLDH;y++) {
+					Chunk c = chunks[x][z][y];
+					if (c!=null)
+						c.destroy();
 				}
 	}
 }

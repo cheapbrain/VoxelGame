@@ -5,13 +5,16 @@ import net.cheapbrain.voxel.blocks.Block;
 import net.cheapbrain.voxel.blocks.BlockManager;
 
 public class Chunk {
+	public static final Chunk VOIDCHUNK = new Chunk(0, 0, 0);
 	public static final short SIZE = 16;
-	public short[][][][] blocks;
+	private short[][][][] blocks;
 	private int displayList;
 	private int x, y, z;
 	private int rx, ry, rz;
 	private int biome = 0;
 	private boolean hasChanged = true;
+	private boolean isVoid;
+	private boolean render;
 	
 	public Chunk(int x, int y, int z) {
 		this.x = x;
@@ -20,7 +23,8 @@ public class Chunk {
 		rx = x*SIZE;
 		ry = y*SIZE;
 		rz = z*SIZE;
-		blocks = new short[SIZE][SIZE][SIZE][2];
+		isVoid = true;
+		render = false;
 	}
 	
 	public Chunk(int x, int y, int z, short[][][][] blocks) {
@@ -31,12 +35,14 @@ public class Chunk {
 		ry = y*SIZE;
 		rz = z*SIZE;
 		this.blocks = blocks;
+		isVoid = false;
+		render = true;
 	}
 	public void setAsChanged() {
 		hasChanged = true;
 	}
 	
-	public void load(World world) {
+	private void load(World world) {
 		if (displayList!=0)
 			glDeleteLists(displayList, 1);
 		displayList = glGenLists(1);
@@ -79,36 +85,48 @@ public class Chunk {
 	}
 	
 	public void destroy() {
-		glDeleteLists(displayList, 1);
-		blocks = null;
+		if (!isVoid) {
+			glDeleteLists(displayList, 1);
+			blocks = null;
+		}
 	}
 	
 	public void render(World world) {
-		if (hasChanged) {
-			load(world);
-			
+		if (render) {
+			if (hasChanged) {
+				load(world);
+				
+			}
+			glCallList(displayList);
 		}
-		glCallList(displayList);
 	}
 	
 	public void setBlock(int x, int y, int z, int id, int data) {
-		blocks[x][y][z][0] = (short) id;
-		blocks[x][y][z][1] = (short) data;
-		hasChanged = true;
+		if (!isVoid) {
+			blocks[x][y][z][0] = (short) id;
+			blocks[x][y][z][1] = (short) data;
+			hasChanged = true;
+		}
 	}
 	
 	public Block getBlock(int x, int y, int z) {
-		if (x<0) x = SIZE + x;
-		if (y<0) y = SIZE + y;
-		if (z<0) z = SIZE + z;
-		return BlockManager.get(blocks[x][y][z][0]);
+		if (!isVoid) {
+			if (x<0) x = SIZE + x;
+			if (y<0) y = SIZE + y;
+			if (z<0) z = SIZE + z;
+			return BlockManager.get(blocks[x][y][z][0]);
+		}
+		return BlockManager.get(1);
 	}
 	
 	public short getBlockId(int x, int y, int z) {
-		if (x<0) x = SIZE + x;
-		if (y<0) y = SIZE + y;
-		if (z<0) z = SIZE + z;
-		return blocks[x][y][z][0];
+		if (!isVoid) {
+			if (x<0) x = SIZE + x;
+			if (y<0) y = SIZE + y;
+			if (z<0) z = SIZE + z;
+			return blocks[x][y][z][0];
+		}
+		return 1;
 	}
 	
 	public int getX() {

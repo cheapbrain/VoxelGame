@@ -6,7 +6,7 @@ import net.cheapbrain.voxel.utils.SimplexNoise;
 public class MapGenerator {
 	
 	public static int biome(){
-		return 4;
+		return 2;
 	}
 	
 	public static Chunk[] generateChunk(int seed, int cx, int cz, int wheight) {
