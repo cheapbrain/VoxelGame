@@ -15,7 +15,8 @@ public class Main {
 
 	public static double fractalNoise(double x, double y, double z, int depth, double p, int f) {
 	//prime due:coord , z: seed, depth: quante volte la applica su se stesso, p:persistenza-numero da moltiplicare a ogni loop, f: seleziona SUM_P o SUM_PABS
-		double noise = 0;
+		//  x/s/2,y/s,   seed,                p,                                           k,                                            FUNCTION_SUM_P_ABS)	
+		double noise = 0;  
 		double p2 = 1;
 		double s = 1;
 		switch (f) {
@@ -62,7 +63,7 @@ public class Main {
 	
 	public static void main(String args[]) {
 		System.out.println("generating...");
-		int res = 1024;
+		int res = 256;
 		BufferedImage image = new BufferedImage(res, res, BufferedImage.TYPE_INT_RGB);
 		int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
 		
@@ -71,34 +72,25 @@ public class Main {
 		int h = image.getHeight();
 		int max = w*h;
 		int vy = max-w;
+		
 		for (int y=0;y<h;y++) {
 			for (int x=0;x<w;x++) {
 				int value = 0;
-				double s = 60;
-				double k = .5;
-				int p = 1;
+				double s = 50;
+				double k = .3;
+				int p = 8;
 				
-				double v1 = Math.sqrt(fractalNoise(x/s/2d, y/s, seed, p, k, FUNCTION_SUM_P_ABS));
-				double v2 = Math.sqrt(fractalNoise(x/s/2d, y/s, seed*31, p, k, FUNCTION_SUM_P_ABS));
+				double v1 = Math.sqrt(fractalNoise(x/s/2, y/s, seed, p, k, FUNCTION_SUM_P_ABS));
 
-				if (y>h/2d) {
-					if (y<h/2d+10) {
-						v1 *= (y-h/2d)*Math.PI/2;
-						v2 *= (y-h/2d)*Math.PI/2;
-					}
-					else {
-						v1 = 1;
-						v2 = 1;
-					}
-				}
 				
-				if (v1<.3&&v2<.3)
+				
+				if (v1<0.7)
 					value = 255;
 				
 				value = value%256;
 				value = (value<<8)+value%256;
 				value = (value<<8)+value%256;
-				pixels[x+vy] = value;
+				pixels[x+vy] = (int) (v1*200d);
 			}
 			vy -= w;
 		}

@@ -12,6 +12,7 @@ public class MapGenerator {
 	public static Chunk[] generateChunk(int seed, int cx, int cz, int wheight) {
 		short[][][][][] blocks = new short[wheight][Chunk.SIZE][Chunk.SIZE][Chunk.SIZE][2];
 		seed *= 31;
+		
 		for (int x=0;x<16;x++)
 			for (int z=0;z<16;z++) {
 				
@@ -28,7 +29,7 @@ public class MapGenerator {
 				
 				for (int cy=0;cy<wheight;cy++)
 					for (int y=0;y<Chunk.SIZE;y++) {
-											
+
 						if (y+cy*Chunk.SIZE==height)
 							if (y+cy*Chunk.SIZE<128)
 								blocks[cy][x][y][z][0] = (short) BiomeManager.get(biome()).getSubWaterSurface();
@@ -60,7 +61,7 @@ public class MapGenerator {
 									blocks[cy][x][y][z][0] = (short) BiomeManager.get(biome()).getLast();
 								}
 							}
-						}			
+						}
 					}
 			}
 		Chunk[] chunks = new Chunk[wheight];

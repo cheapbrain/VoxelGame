@@ -15,7 +15,6 @@ import org.lwjgl.util.vector.Vector4f;
 
 public class GameState {
 	private World world;
-	//private Map<Vector3i, Integer> heatmap = new HashMap<Vector3i, Integer>();
 	private Camera camera;
 	private Input input;
 	private Screen screen;
